@@ -1,0 +1,58 @@
+version: "2"
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: read_the_docs
+
+  redis:
+    image: redis
+
+  elasticsearch:
+    image: elasticsearch:1.5
+    environment:
+      - 'discovery.type=single-node'
+      - 'xpack.security.enabled=false'
+      - 'http.host=0.0.0.0'
+    ports:
+      - 9200:9200
+
+  read_the_docs_celery:
+    build: "."
+    image: read_the_docs
+
+    depends_on:
+      - postgres
+      - redis
+      - elasticsearch
+
+    environment:
+      POSTGRES_DB: read_the_docs
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      HOSTNAME: localhost
+
+    command: celery -A readthedocs worker -l info
+
+  read_the_docs:
+    build: "."
+    image: read_the_docs
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+      - redis
+      - elasticsearch
+      - read_the_docs_celery
+
+    environment:
+      POSTGRES_DB: read_the_docs
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      ADMIN_EMAIL: simon.harrison@babylonhealth.com
+      SERVER_ADDRESS: 0.0.0.0
+      SERVER_PORT: 8080
+      WEBSOCKET_HOST: localhost:8088
+      HOSTNAME: localhost
