@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  build:
+    machine:
+      enabled: true
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run:
+          name: Build prerequisites
+          command: |
+            echo "$CIRCLE_SHA1" > .commit-id
+            docker --version
+            docker-compose --version
+            docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" quay.io
+      - run:
+          command: make build
+      - deploy:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ];
+              then make install tag-master;
+            fi
