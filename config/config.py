@@ -10,7 +10,9 @@ class CommunitySettings(CommunityBaseSettings):
     SESSION_COOKIE_DOMAIN = environ.get('HOSTNAME')
     
     SITE_ROOT = environ['ROOT']
-    ES_HOSTS = ['elasticsearch:9200']
+    ELASTICSEARCH_HOST = environ['READTHEDOCS_POSTGRES_SERVICE_HOST']
+    ELASTICSEARCH_PORT = environ['READTHEDOCS_POSTGRES_SERVICE_PORT']
+    ES_HOSTS = [ELASTICSEARCH_HOST + ':' + ELASTICSEARCH_PORT]
     DEBUG = False
     
     STATIC_ROOT = os.path.join(environ['STATIC_ROOT'], 'static')
@@ -31,12 +33,14 @@ class CommunitySettings(CommunityBaseSettings):
             'NAME': environ['POSTGRES_DB'],
             'USER': environ['POSTGRES_USER'],
             'PASSWORD': environ['POSTGRES_PASSWORD'],
-            'HOST': 'postgres',
-            'PORT': 5432,
+            'HOST': environ['READTHEDOCS_POSTGRES_SERVICE_HOST'],
+            'PORT': environ['READTHEDOCS_POSTGRES_SERVICE_PORT'],
         },
     }
 
-    BROKER_URL = 'redis://redis:6379/0'
+    REDIS_HOST = environ['READTHEDOCS_REDIS_SERVICE_HOST']
+    REDIS_PORT = environ['READTHEDOCS_REDIS_SERVICE_PORT']
+    BROKER_URL = 'redis://' + REDIS_HOST +':' + REDIS_PORT + '/0'
     CELERY_ALWAYS_EAGER = False
     CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
     CORS_ORIGIN_REGEX_WHITELIST = ['^.+$']

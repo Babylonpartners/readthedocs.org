@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: read_the_docs
+      POSTGRES_DB: readthedocs
 
   redis:
     image: redis
@@ -19,9 +19,9 @@ services:
     ports:
       - 9200:9200
 
-  read_the_docs_celery:
+  readthedocs-celery:
     build: "."
-    image: read_the_docs
+    image: readthedocs
 
     depends_on:
       - postgres
@@ -29,26 +29,26 @@ services:
       - elasticsearch
 
     environment:
-      POSTGRES_DB: read_the_docs
+      POSTGRES_DB: readthedocs
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       HOSTNAME: localhost
 
     command: celery -A readthedocs worker -l info
 
-  read_the_docs:
+  readthedocs:
     build: "."
-    image: read_the_docs
+    image: readthedocs
     ports:
       - 8080:8080
     depends_on:
       - postgres
       - redis
       - elasticsearch
-      - read_the_docs_celery
+      - readthedocs-celery
 
     environment:
-      POSTGRES_DB: read_the_docs
+      POSTGRES_DB: readthedocs
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       ADMIN_EMAIL: simon.harrison@babylonhealth.com

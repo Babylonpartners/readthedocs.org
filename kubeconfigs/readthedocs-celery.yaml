@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: readthedocs-celery
+  name: readthedocs-celery
+spec:
+  ports:
+  - name: headless
+    port: 55555
+    targetPort: 0
+  selector:
+    app: readthedocs-celery
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: readthedocs-celery
+  labels:
+    app: readthedocs-celery
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: readthedocs-celery
+    spec:
+      containers:
+      - args:
+        - celery
+        - -A
+        - readthedocs
+        - worker
+        - -l
+        - info
+        env:
+        - name: HOSTNAME
+          value: localhost
+        - name: POSTGRES_DB
+          value: readthedocs
+        - name: POSTGRES_PASSWORD
+          value: password
+        - name: POSTGRES_USER
+          value: postgres
+        image: readthedocs
+        name: readthedocs-celery
+        imagePullPolicy: Never

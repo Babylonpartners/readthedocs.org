@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: readthedocs
+  labels:
+    app: readthedocs
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: readthedocs
+  name: readthedocs
+spec:
+  ports:
+  - port: 80
+    name: http
+    targetPort: 8080
+  selector:
+    app: readthedocs
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: readthedocs
+  labels:
+    app: readthedocs
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: readthedocs
+    spec:
+      serviceAccountName: readthedocs
+      imagePullSecrets:
+      - name: babylonhealth-deploy-dev-pull-secret
+      containers:
+      - env:
+        - name: ADMIN_EMAIL
+          value: marjori.pomarole@babylonhealth.com
+        - name: HOSTNAME
+          value: localhost
+        - name: POSTGRES_DB
+          value: readthedocs
+        - name: POSTGRES_PASSWORD
+          value: password
+        - name: POSTGRES_USER
+          value: postgres
+        - name: SERVER_ADDRESS
+          value: 0.0.0.0
+        - name: SERVER_PORT
+          value: "8080"
+        - name: WEBSOCKET_HOST
+          value: localhost:8088
+        image: readthedocs
+        name: readthedocs
+        imagePullPolicy: Never
