@@ -7,9 +7,9 @@ metadata:
   name: readthedocs-redis
 spec:
   ports:
-  - port: 5432
+  - port: 6379
     name: headless
-    targetPort: 5432
+    targetPort: 6379
   selector:
     app: readthedocs-redis
 ---

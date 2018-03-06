@@ -6,7 +6,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: readthedocs
-
   redis:
     image: redis
 
@@ -48,6 +47,12 @@ services:
       - readthedocs-celery
 
     environment:
+      READTHEDOCS_POSTGRES_SERVICE_HOST: localhost
+      READTHEDOCS_POSTGRES_SERVICE_PORT: 5432
+      READTHEDOCS_REDIS_SERVICE_HOST: localhost
+      READTHEDOCS_REDIS_SERVICE_PORT: 6379
+      READTHEDOCS_ELASTICSEARCH_SERVICE_HOST: localhost
+      READTHEDOCS_ELASTICSEARCH_SERVICE_PORT: 9200
       POSTGRES_DB: readthedocs
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password

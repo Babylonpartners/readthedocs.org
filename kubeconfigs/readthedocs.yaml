@@ -55,6 +55,6 @@ spec:
           value: "8080"
         - name: WEBSOCKET_HOST
           value: localhost:8088
-        image: readthedocs
+        image: quay.io/babylonhealth/readthedocs:latest
         name: readthedocs
         imagePullPolicy: Never
