@@ -5,13 +5,13 @@ environ = os.environ
 
 
 class CommunitySettings(CommunityBaseSettings):
-    PRODUCTION_DOMAIN = environ['HOSTNAME']
+    PRODUCTION_DOMAIN = environ.get('HOSTNAME', 'localhost')
     WEBSOCKET_HOST = environ.get('WEBSOCKET_HOST')
-    SESSION_COOKIE_DOMAIN = environ.get('HOSTNAME')
+    SESSION_COOKIE_DOMAIN = environ.get('HOSTNAME', 'localhost')
     
     SITE_ROOT = environ['ROOT']
-    ELASTICSEARCH_HOST = environ['READTHEDOCS_ELASTICSEARCH_SERVICE_HOST']
-    ELASTICSEARCH_PORT = environ['READTHEDOCS_ELASTICSEARCH_SERVICE_PORT']
+    ELASTICSEARCH_HOST = environ.get('READTHEDOCS_ELASTICSEARCH_SERVICE_HOST', 'localhost')
+    ELASTICSEARCH_PORT = environ.get('READTHEDOCS_ELASTICSEARCH_SERVICE_PORT', 9200)
     ES_HOSTS = [ELASTICSEARCH_HOST + ':' + ELASTICSEARCH_PORT]
     DEBUG = False
     
@@ -33,13 +33,13 @@ class CommunitySettings(CommunityBaseSettings):
             'NAME': environ['POSTGRES_DB'],
             'USER': environ['POSTGRES_USER'],
             'PASSWORD': environ['POSTGRES_PASSWORD'],
-            'HOST': environ['READTHEDOCS_POSTGRES_SERVICE_HOST'],
-            'PORT': environ['READTHEDOCS_POSTGRES_SERVICE_PORT'],
+            'HOST': environ.get('READTHEDOCS_POSTGRES_SERVICE_HOST', 'localhost'),
+            'PORT': environ.get('READTHEDOCS_POSTGRES_SERVICE_PORT', 5432),
         },
     }
 
-    REDIS_HOST = environ['READTHEDOCS_REDIS_SERVICE_HOST']
-    REDIS_PORT = environ['READTHEDOCS_REDIS_SERVICE_PORT']
+    REDIS_HOST = environ.get('READTHEDOCS_REDIS_SERVICE_HOST', 'localhost')
+    REDIS_PORT = environ.get('READTHEDOCS_REDIS_SERVICE_PORT', 6379)
     BROKER_URL = 'redis://' + REDIS_HOST +':' + REDIS_PORT + '/0'
     CELERY_ALWAYS_EAGER = False
     CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
