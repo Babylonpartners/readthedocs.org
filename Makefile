@@ -16,3 +16,9 @@ tag-develop: build
 
 install: build
 	docker push $(REPO)/$(NAME):$(VERSION)
+
+local-deploy: 
+	docker build -t readthedocs .
+	eval $(minikube docker-env)
+	kubectl apply -f kubeconfigs/
+	minikube service $(NAME) --url

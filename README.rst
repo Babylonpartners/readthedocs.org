@@ -75,3 +75,35 @@ License
 `MIT`_ © 2010-2017 Read the Docs, Inc & contributors
 
 .. _MIT: LICENSE
+
+Running locally with Minikube
+-------
+
+```
+brew install kubectl
+brew install minikube
+```
+
+Make sure you have some VM solution installed, like VirtualBox. Check if your current kubectl context is set to minikube:
+
+```
+minikube start
+kubectl config current-context
+minikube
+```
+
+Make sure it started on the dashboard with ```minikube dashboard```. Now we start the process of creating the image locally, telling kubectl to get the image from the local registry and apply the configs.
+At the end the url for the external load balancer can be used to see the app.
+
+```
+docker build -t readthedocs .
+eval $(minikube docker-env)
+kubectl apply -f kubeconfigs/
+minikube service readthedocs --url
+```
+
+or run
+
+```
+make local-deploy
+```

@@ -14,9 +14,10 @@ metadata:
   name: readthedocs
 spec:
   ports:
-  - port: 80
-    name: http
+  - protocol: TCP
+    port: 8080
     targetPort: 8080
+  type: LoadBalancer
   selector:
     app: readthedocs
 ---
@@ -55,6 +56,6 @@ spec:
           value: "8080"
         - name: WEBSOCKET_HOST
           value: localhost:8088
-        image: quay.io/babylonhealth/readthedocs:latest
+        image: readthedocs
         name: readthedocs
         imagePullPolicy: Never
