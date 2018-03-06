@@ -21,5 +21,5 @@ jobs:
               then make install tag-master;
             fi
             if [ "${CIRCLE_BRANCH}" == "develop" ];
-              then make install tag-develop deploy-dev;
+              then make install tag-develop;
             fi
