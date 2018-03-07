@@ -30,8 +30,8 @@ class CommunitySettings(CommunityBaseSettings):
             'NAME': environ['POSTGRES_DB'],
             'USER': environ['POSTGRES_USER'],
             'PASSWORD': environ['POSTGRES_PASSWORD'],
-            'HOST': environ.get('READTHEDOCS_POSTGRES_SERVICE_HOST', 'postgres'),
-            'PORT': environ.get('READTHEDOCS_POSTGRES_SERVICE_PORT', 5432),
+            'HOST': environ.get('READTHEDOCS_POSTGRESQL_SERVICE_HOST', 'postgres'),
+            'PORT': environ.get('READTHEDOCS_POSTGRESQL_SERVICE_PORT', 5432),
         },
     }
 
