@@ -11,7 +11,7 @@ class CommunitySettings(CommunityBaseSettings):
     
     SITE_ROOT = environ['ROOT']
     ELASTICSEARCH_HOST = environ.get('READTHEDOCS_ELASTICSEARCH_SERVICE_HOST', 'localhost')
-    ELASTICSEARCH_PORT = environ.get('READTHEDOCS_ELASTICSEARCH_SERVICE_PORT', 9200)
+    ELASTICSEARCH_PORT = environ.get('READTHEDOCS_ELASTICSEARCH_SERVICE_PORT', '9200')
     ES_HOSTS = [ELASTICSEARCH_HOST + ':' + ELASTICSEARCH_PORT]
     DEBUG = False
     
@@ -39,7 +39,7 @@ class CommunitySettings(CommunityBaseSettings):
     }
 
     REDIS_HOST = environ.get('READTHEDOCS_REDIS_SERVICE_HOST', 'localhost')
-    REDIS_PORT = environ.get('READTHEDOCS_REDIS_SERVICE_PORT', 6379)
+    REDIS_PORT = environ.get('READTHEDOCS_REDIS_SERVICE_PORT', '6379')
     BROKER_URL = 'redis://' + REDIS_HOST +':' + REDIS_PORT + '/0'
     CELERY_ALWAYS_EAGER = False
     CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
