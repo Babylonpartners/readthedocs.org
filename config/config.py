@@ -30,14 +30,13 @@ class CommunitySettings(CommunityBaseSettings):
             'NAME': environ['POSTGRES_DB'],
             'USER': environ['POSTGRES_USER'],
             'PASSWORD': environ['POSTGRES_PASSWORD'],
-            'HOST': 'readthedocs-postgresql.default.svc.cluster.local',
+            'HOST': 'readthedocs-postgresql',
             'PORT': environ.get('READTHEDOCS_POSTGRESQL_SERVICE_PORT', 5432),
         },
     }
 
-    REDIS_HOST = environ.get('READTHEDOCS_REDIS_SERVICE_HOST', 'redis')
     REDIS_PORT = environ.get('READTHEDOCS_REDIS_SERVICE_PORT', '6379')
-    BROKER_URL = 'redis://' + REDIS_HOST +':' + REDIS_PORT + '/0'
+    BROKER_URL = 'redis://readthedocs-redis:' + REDIS_PORT + '/0'
     CELERY_ALWAYS_EAGER = False
     CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
     CORS_ORIGIN_REGEX_WHITELIST = ['^.+$']
