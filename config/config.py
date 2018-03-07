@@ -10,9 +10,6 @@ class CommunitySettings(CommunityBaseSettings):
     SESSION_COOKIE_DOMAIN = environ.get('HOSTNAME', 'localhost')
     
     SITE_ROOT = environ['ROOT']
-    ELASTICSEARCH_HOST = environ.get('READTHEDOCS_ELASTICSEARCH_SERVICE_HOST', 'elasticsearch')
-    ELASTICSEARCH_PORT = environ.get('READTHEDOCS_ELASTICSEARCH_SERVICE_PORT', '9200')
-    ES_HOSTS = [ELASTICSEARCH_HOST + ':' + ELASTICSEARCH_PORT]
     DEBUG = False
     
     STATIC_ROOT = os.path.join(environ['STATIC_ROOT'], 'static')

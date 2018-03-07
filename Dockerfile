@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM python:2.7-slim
 
 MAINTAINER  Anton Kirilenko "https://github.com/flid"
 
