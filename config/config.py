@@ -9,6 +9,7 @@ class CommunitySettings(CommunityBaseSettings):
     WEBSOCKET_HOST = environ.get('WEBSOCKET_HOST')
     SESSION_COOKIE_DOMAIN = environ.get('HOSTNAME', 'localhost')
     
+    ALLOWED_HOSTS = ['*']
     SITE_ROOT = environ['ROOT']
     DEBUG = False
     
