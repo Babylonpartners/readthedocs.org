@@ -5,6 +5,21 @@ environ = os.environ
 
 
 class CommunitySettings(CommunityBaseSettings):
+    MIDDLEWARE_CLASSES = (
+        'readthedocs.core.middleware.ProxyMiddleware',
+        'readthedocs.core.middleware.FooterNoSessionMiddleware',
+        'django.middleware.locale.LocaleMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.security.SecurityMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.middleware.http.ConditionalGetMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'linaro_django_pagination.middleware.PaginationMiddleware',
+        'readthedocs.core.middleware.SubdomainMiddleware',
+        'readthedocs.core.middleware.SingleVersionMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
+    )
     PRODUCTION_DOMAIN = environ.get('HOSTNAME', 'localhost')
     WEBSOCKET_HOST = environ.get('WEBSOCKET_HOST')
     SESSION_COOKIE_DOMAIN = environ.get('HOSTNAME', 'localhost')

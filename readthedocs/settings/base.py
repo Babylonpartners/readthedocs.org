@@ -127,6 +127,7 @@ class CommunityBaseSettings(Settings):
         'readthedocs.core.middleware.FooterNoSessionMiddleware',
         'django.middleware.locale.LocaleMiddleware',
         'django.middleware.common.CommonMiddleware',
+        'django.middleware.http.ConditionalGetMiddleware',
         'django.middleware.security.SecurityMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
