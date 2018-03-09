@@ -10,5 +10,6 @@ echo "from django.contrib.auth.models import User; user=User.objects.filter(user
 python manage.py makemessages --all
 python manage.py compilemessages
 
+curl -XPUT http://readthedocs-elasticsearch-client:9200/readthedocs
 curl -XPUT http://elasticsearch:9200/readthedocs
 uwsgi --ini $ROOT/uwsgi.ini --http $SERVER_ADDRESS:$SERVER_PORT --static-map /media=/opt/readthedocs.org/static/media --static-map /static=/opt/readthedocs.org/static/static
