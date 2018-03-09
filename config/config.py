@@ -40,6 +40,8 @@ class CommunitySettings(CommunityBaseSettings):
     print(STATICFILES_DIRS)
     print(MEDIA_ROOT)
 
+    ES_HOSTS = ['readthedocs-elasticsearch-client:9200']
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
