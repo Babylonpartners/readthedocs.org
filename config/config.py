@@ -20,6 +20,7 @@ class CommunitySettings(CommunityBaseSettings):
         'readthedocs.core.middleware.SingleVersionMiddleware',
         'corsheaders.middleware.CorsMiddleware',
     )
+    USE_SUBDOMAIN = environ.get('USE_SUBDOMAIN', False)
     PRODUCTION_DOMAIN = environ.get('HOSTNAME', 'localhost')
     WEBSOCKET_HOST = environ.get('WEBSOCKET_HOST')
     SESSION_COOKIE_DOMAIN = environ.get('HOSTNAME', 'localhost')
@@ -48,7 +49,7 @@ class CommunitySettings(CommunityBaseSettings):
             'NAME': environ['POSTGRES_DB'],
             'USER': environ['POSTGRES_USER'],
             'PASSWORD': environ['POSTGRES_PASSWORD'],
-            'HOST': 'readthedocs-postgresql',
+            'HOST': environ.get('POSTGRES_HOST', 'readthedocs-postgresql'),
             'PORT': environ.get('READTHEDOCS_POSTGRESQL_SERVICE_PORT', 5432),
         },
     }
