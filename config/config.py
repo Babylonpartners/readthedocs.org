@@ -58,6 +58,7 @@ class CommunitySettings(CommunityBaseSettings):
     BROKER_URL = 'redis://readthedocs-redis:' + REDIS_PORT + '/0'
     CELERY_ALWAYS_EAGER = False
     CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
+    CELERY_RESULT_BACKEND ='redis'
     CORS_ORIGIN_REGEX_WHITELIST = ['^.+$']
     CORS_ALLOW_HEADERS = list(CommunityBaseSettings.CORS_ALLOW_HEADERS) + ['csrftoken']
     CSRF_COOKIE_SECURE = False
