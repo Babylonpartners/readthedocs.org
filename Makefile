@@ -20,8 +20,9 @@ install: build
 local-build: 
 	docker build -t readthedocs .
 
-local-kube-deploy: local-build
+local-kube-deploy:
 	eval $(minikube docker-env)
+	docker build -t readthedocs .
 	kubectl apply -f kubeconfigs/
 	minikube service $(NAME) --url
 

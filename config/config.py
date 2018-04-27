@@ -54,11 +54,12 @@ class CommunitySettings(CommunityBaseSettings):
         },
     }
 
+    ALLOW_PRIVATE_REPOS = True
     REDIS_PORT = environ.get('READTHEDOCS_REDIS_SERVICE_PORT', '6379')
     BROKER_URL = 'redis://readthedocs-redis:' + REDIS_PORT + '/0'
     CELERY_ALWAYS_EAGER = False
     CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
-    CELERY_RESULT_BACKEND ='redis'
+    CELERY_RESULT_BACKEND = 'redis://readthedocs-redis:' + REDIS_PORT + '/0'
     CORS_ORIGIN_REGEX_WHITELIST = ['^.+$']
     CORS_ALLOW_HEADERS = list(CommunityBaseSettings.CORS_ALLOW_HEADERS) + ['csrftoken']
     CSRF_COOKIE_SECURE = False
@@ -67,8 +68,15 @@ class CommunitySettings(CommunityBaseSettings):
     #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     
-    SLUMBER_USERNAME = 'test'
-    SLUMBER_PASSWORD = 'test'
+    SLUMBER_API_HOST = 'http://localhost:8080'
+    SLUMBER_USERNAME = 'admin'
+    SLUMBER_PASSWORD = 'admin'
+
+    _ = gettext = lambda s: s
+
+    LANGUAGES = (
+        ('en', gettext('English')),
+    )
 
     @property
     def LOGGING(self):  # noqa

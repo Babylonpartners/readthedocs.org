@@ -1,4 +1,4 @@
-FROM python:2.7-slim
+FROM readthedocs/build:3.0
 
 MAINTAINER  Anton Kirilenko "https://github.com/flid"
 
@@ -7,6 +7,7 @@ ENV ROOT /opt/readthedocs.org
 ENV STATIC_ROOT $ROOT/static
 ENV RUN_USER rth-user
 
+USER root
 # Update the package repository
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \ 
 	DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
@@ -19,14 +20,15 @@ RUN export LANGUAGE=en_US.UTF-8 && \
 	locale-gen en_US.UTF-8 && \
 	DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
-
 # Install readthedocs
-RUN cd /opt && git clone https://github.com/Babylonpartners/readthedocs.org.git
-
 WORKDIR $ROOT
 RUN pip install --upgrade pip
+# Better caching
+COPY requirements.txt .
+COPY requirements requirements
 RUN pip install -r requirements.txt
 RUN pip install psycopg2==2.7.3.1 uWSGI==2.0.14 anyjson==0.3.3
+COPY . .
 
 # Small hack - moval all media and static files inside `static` dir, 
 # so uwsgi has no access to code files when serving static.
